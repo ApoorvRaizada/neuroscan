@@ -11,9 +11,12 @@ class GradCAM:
         target_layer.register_forward_hook(self._save)
 
     def _save(self, module, inp, out):
-                self.acts = out.detach()
+        self.acts = out.detach()
         if out.requires_grad:
-            out.register_hook(lambda g: setattr(self, "grads", g.detach()))
+            out.register_hook(self._save_grad)
+
+    def _save_grad(self, grad):
+        self.grads = grad.detach()
 
     def __call__(self, x, class_idx=None):
         """x: (1,3,H,W). Returns (heatmap HxW in [0,1], class index, probabilities)."""
