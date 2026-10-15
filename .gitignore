@@ -1,0 +1,10 @@
+.venv/
+.env
+.kaggle/
+access_token
+kaggle.json
+data/raw/
+runs/**/*.pt
+runs/**/*.pth
+__pycache__/
+*.pyc

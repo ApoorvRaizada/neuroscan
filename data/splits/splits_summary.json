@@ -1,0 +1,36 @@
+{
+  "seed": 42,
+  "max_dist": 2,
+  "total_images": 7200,
+  "images_dropped_label_conflict": 23,
+  "clusters": 5635,
+  "splits": {
+    "train": {
+      "images": 5018,
+      "per_class": {
+        "pituitary": 1258,
+        "notumor": 1257,
+        "glioma": 1253,
+        "meningioma": 1250
+      }
+    },
+    "val": {
+      "images": 864,
+      "per_class": {
+        "glioma": 254,
+        "pituitary": 248,
+        "meningioma": 234,
+        "notumor": 128
+      }
+    },
+    "test": {
+      "images": 834,
+      "per_class": {
+        "glioma": 256,
+        "pituitary": 240,
+        "meningioma": 234,
+        "notumor": 104
+      }
+    }
+  }
+}
