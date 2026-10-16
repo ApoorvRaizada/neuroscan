@@ -1,0 +1,7 @@
+-r requirements.txt
+pandas==3.0.6
+scikit-learn==1.9.1
+matplotlib==3.11.2
+imagehash==4.3.2
+kaggle==2.2.4
+PyYAML==6.0.3
