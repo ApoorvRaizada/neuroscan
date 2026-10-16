@@ -1,30 +1,13 @@
-"""Dataset and transforms. Reads the CSV manifests made by scripts/make_splits.py."""
+"""Dataset. Reads the CSV manifests made by scripts/make_splits.py."""
 from pathlib import Path
 
 import pandas as pd
-import torch
 from PIL import Image
 from torch.utils.data import Dataset
-from torchvision import transforms as T
 
-CLASSES = ["glioma", "meningioma", "notumor", "pituitary"]
+from model.preprocess import CLASSES, build_transforms  # noqa: F401 (re-exported)
+
 CLASS_TO_IDX = {c: i for i, c in enumerate(CLASSES)}
-IMAGENET_MEAN = [0.485, 0.456, 0.406]
-IMAGENET_STD = [0.229, 0.224, 0.225]
-
-
-def build_transforms(train: bool, size: int = 224):
-    norm = T.Normalize(IMAGENET_MEAN, IMAGENET_STD)
-    if train:
-        return T.Compose([
-            T.Resize((size, size)),
-            T.RandomRotation(10),
-            T.RandomHorizontalFlip(),
-            T.ColorJitter(brightness=0.2, contrast=0.2),
-            T.ToTensor(),
-            norm,
-        ])
-    return T.Compose([T.Resize((size, size)), T.ToTensor(), norm])
 
 
 class MRIDataset(Dataset):
@@ -38,5 +21,5 @@ class MRIDataset(Dataset):
 
     def __getitem__(self, i):
         row = self.df.iloc[i]
-        img = Image.open(self.root / row.path).convert("RGB")  # grayscale/RGBA -> 3 channels
+        img = Image.open(self.root / row.path).convert("RGB")
         return self.tf(img), CLASS_TO_IDX[row.label]
